@@ -1,0 +1,87 @@
+// Mr Shotgun dev log //
+
+Format for log:
+
+VERSION - MM/DD/YY:
+
+    + ITEM ADDED
+
+    - ITEM REMOVED
+
+    * ITEM CHANGED
+
+    / NOTE
+
+----------------------------
+
+0.2.0 Alpha - June 28, 2016:
+
+    / I'M BACK BITCHES
+    + 
+0.1.21 Alpha - 10/24/15:
+    
+    * Bugfix for particles
+
+0.1.20 Alpha - 10/24/15:
+    
+    + Arcade mode
+    + Boolit
+    * Complete reworking of menu system
+    * New map system
+
+0.1.19 Alpha - 10/13/15:
+    
+    * Changed artstyle
+    * Performance improvement
+    * Getting ready for new map system
+
+0.1.18 Alpha - 10/12/15:
+
+    / Next update is gonna be pretty massive
+    / new artstyle by me :D
+    / and a semi-random map generator
+    / Taken a bit of a break
+
+0.1.17 Alpha - 10/5/15:
+    
+    * Reworked map system a little
+    * Reverted to old collisions for now
+
+0.1.16 Alpha - 10/4/15:
+    
+    + Added a system for tiles that makes life sweeter
+    - Removed deprecated method of having two renderable maps for tiles below and above player
+    * Changed player texture, not really sure why
+    * Changed how maps work
+    * Tiles are now sorted automatically based on "z" indexes to allow for cool effects.
+    / Submitted 0.1.15 on itch
+    / Working on random terrain generation
+    / Still have no idea why corners are glitched
+
+0.1.15 Alpha - 10/1/15:
+    
+    + Added enemies
+    + Added file IO
+    - Removed some useless junk code
+    * Easier to read debug info
+    * Changed how collisions work, kinda glitchy at the moment
+    / Colliding with corners is glitchy, so be careful, you might get stuck
+    / Submitted 0.1.14 on itch.io.
+    / Gonna start doing some art/music soon
+
+0.1.14 Alpha - 9/27/15:
+	
+	+ Added settings menu
+	+ Added grass and tree textures
+	+ Debug information
+	* Optimised the hell out of collisions
+	* Major improvements to the player
+	/ Took a very long break, sorry
+
+0.1.0 Alpha - 8/22/15:
+
+    + Added physics to player
+    * Collisions now WORK
+    / Started keeping track of game dev
+    / this is the first "demo"
+    
