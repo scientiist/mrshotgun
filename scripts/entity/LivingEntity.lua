@@ -35,3 +35,5 @@ end
 function LivingEntity:draw()
 
 end
+
+return LivingEntity

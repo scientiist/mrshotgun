@@ -17,7 +17,9 @@ VERSION - MM/DD/YY:
 0.2.0 Alpha - June 28, 2016:
 
     / I'M BACK BITCHES
-    + 
+    * Redid everything lol
+    + Using a nice OOP Entity system for stuff.
+
 0.1.21 Alpha - 10/24/15:
     
     * Bugfix for particles

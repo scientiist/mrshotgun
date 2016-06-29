@@ -35,5 +35,9 @@ function BaseEntity:instanceOf(entityType)
     return false
 end
 
+function BaseEntity:update(dt)
+
+end
+
 -- return the thingy
 return BaseEntity

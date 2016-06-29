@@ -30,16 +30,52 @@ local Player = require("scripts/entity/Player")
 
 local player1 = Player:new()
 
+local meta = {
+	version = "0.2.0",
+}
+
+map = {
+	{1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0},
+	{1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0},
+	{0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0},
+	{0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0},
+	{1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0},
+	{1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0},
+	{1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0},
+}
+
 function love.load()
 
+	love.window.setMode(1024, 608, {resizable = true, minwidth = 512, minheight = 304})
+	love.window.setTitle("Mr Shotgun by Joshua O'Leary. v"..meta.version)
 end
 
 function love.update(dt)
 	player1:update(dt)
+
+	
 end
 
 function love.draw()
+	love.graphics.push()
+	love.graphics.scale(love.graphics.getWidth()/1024, love.graphics.getHeight()/608)
+
+	love.graphics.setColor(255,255,255)
+	love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
+
 	player1:draw()
+
+
+	for y = 1, #map do
+		for x = 1, #map[y] do
+			if map[y][x] == 1 then
+				love.graphics.setColor(100, 100, 100)
+				love.graphics.rectangle("fill", x*64, y*64, 64, 64)
+			end
+		end
+	end
+
+	love.graphics.pop()
 end
 
 -- I'm not afraid of dying, any time will do. I don't mind at all.
