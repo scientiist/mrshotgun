@@ -24,13 +24,25 @@
 	SOFTWARE. IN OTHER WORDS, I AM NOT LIABLE FOR JACK SHIT.
 
 ]]--
+require("scripts/server/ServerMain")
+
+local updateServerTick
 
 function love.load()
 
 end
 
 function love.update(dt)
+	updateServerTick + (dt * (1/10))
+	if updateServerTick >= 1 then
+		updateServerTick = 0
+		updateServer(dt)
+	end
 end
 
 function love.draw()
 end
+
+-- I'm not afraid of dying, any time will do. I don't mind at all.
+-- Why should I be afraid of dying?
+-- There's no reason for it, you've gotta go some time.
