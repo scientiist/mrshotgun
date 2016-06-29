@@ -9,10 +9,12 @@ Player.networkInfo = {}
 Player.score = 0
 
 function Player:update(dt)
-	
+
 	
 end
 
 function Player:draw()
-	
+
 end
+
+return Player

@@ -24,6 +24,7 @@
 	SOFTWARE. IN OTHER WORDS, I AM NOT LIABLE FOR JACK SHIT.
 
 ]]--
+
 local Player = require("scripts/entity/Player")
 
 
