@@ -1,4 +1,5 @@
-local BaseEntity = require("scripts/entity/BaseEntity.lua")
+local BaseEntity = require("scripts/entity/BaseEntity")
+local EntityType = require("scripts/entity/EnumEntityType")
 
 local LivingEntity = BaseEntity:new()
 
@@ -12,8 +13,8 @@ LivingEntity.maxHealth = 100
 function LivingEntity:update(dt)
 	local entities = {}
 	for i = 1, #entities do
-		if entities[i]:instanceOf("LivingEntity") then
-
+		if entities[i]:instanceOf(EntityType.LIVING_ENTITY) then
+			-- run collision
 		end
 	end
 end
