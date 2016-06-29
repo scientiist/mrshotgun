@@ -24,23 +24,21 @@
 	SOFTWARE. IN OTHER WORDS, I AM NOT LIABLE FOR JACK SHIT.
 
 ]]--
-require("scripts/server/ServerMain")
+local Player = require("scripts/entity/Player")
 
-local updateServerTick
+
+local player1 = Player:new()
 
 function love.load()
 
 end
 
 function love.update(dt)
-	updateServerTick + (dt * (1/10))
-	if updateServerTick >= 1 then
-		updateServerTick = 0
-		updateServer(dt)
-	end
+	player1:update(dt)
 end
 
 function love.draw()
+	player1:draw()
 end
 
 -- I'm not afraid of dying, any time will do. I don't mind at all.
