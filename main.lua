@@ -25,10 +25,13 @@
 
 ]]--
 
+
+local EntityType = require("scripts/entity/EnumEntityType")
+local Physics = require("scripts/util/PhysicsUtil")
 local Player = require("scripts/entity/Player")
+local Monster = require("scripts/entity/Monster")
 
 
-local player1 = Player:new()
 
 local meta = {
 	version = "0.2.0",
@@ -44,6 +47,10 @@ map = {
 	{1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0},
 }
 
+entities = {}
+
+table.insert(entities, Player:new())
+
 function love.load()
 
 	love.window.setMode(1024, 608, {resizable = true, minwidth = 512, minheight = 304})
@@ -51,9 +58,10 @@ function love.load()
 end
 
 function love.update(dt)
-	player1:update(dt)
-
-	
+	for i = 1, #entities do
+		entities[i]:update(dt)
+		print(i)
+	end
 end
 
 function love.draw()
@@ -63,7 +71,11 @@ function love.draw()
 	love.graphics.setColor(255,255,255)
 	love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
 
-	player1:draw()
+	for i = 1, #entities do
+		if entities[i]:instanceOf("LivingEntity") then
+			entities[i]:draw()
+		end
+	end
 
 
 	for y = 1, #map do

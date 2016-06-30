@@ -2,22 +2,25 @@
 -- The main inheritance for all entities --
 -------------------------------------------
 
--- Create the basic table
-local BaseEntity = {
-	-- allows for stuff
-	_inheritance = {"BaseEntity"},
-	-- simple location
-	location = {x = 0, y = 0},
+local obj = {}
 
-}
-
--- create a new OOP Entity
-function BaseEntity:new(o)
+function obj:new(o)
 	o = o or {}
 	setmetatable(o, self)
 	self.__index = self
 	return o
 end
+
+-- Create the basic table
+local BaseEntity = obj:new()
+
+	-- allows for stuff
+BaseEntity._inheritance = {"BaseEntity"}
+	-- simple location
+BaseEntity.location = {x = 0, y = 0,}
+
+-- create a new OOP Entity
+
 
 -- Adds entityType to the Entity's inheritance list
 function BaseEntity:addInheritance(entityType)
