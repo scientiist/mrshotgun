@@ -15,7 +15,7 @@ end
 local BaseEntity = obj:new()
 
 	-- allows for stuff
-BaseEntity._inheritance = {"BaseEntity"}
+BaseEntity._inheritance = {}
 	-- simple location
 BaseEntity.location = {x = 0, y = 0,}
 
@@ -36,10 +36,6 @@ function BaseEntity:instanceOf(entityType)
     end
 
     return false
-end
-
-function BaseEntity:update(dt)
-
 end
 
 -- return the thingy

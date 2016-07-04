@@ -12,35 +12,9 @@ Player:addInheritance("PlayerEntity")
 Player.score = 0
 Player.location = {x = 50, y = 200, facing = 3}
 Player.size = 16
-Player.clickDeb = true
-
-function dump(o)
-   if type(o) == 'table' then
-      local s = '{ '
-      for k,v in pairs(o) do
-         if type(k) ~= 'number' then k = '"'..k..'"' end
-         s = s .. '['..k..'] = ' .. dump(v) .. ','
-      end
-      return s .. '} '
-   else
-      return tostring(o)
-   end
-end
 
 function Player:update(dt)
-	if love.mouse.isDown(1) and clickDeb == true then
-		
-
-		local kek = Monster:new()
-
-		kek.location = {x = self.location.x, y = self.location.y}
-		kek.destination = {x = love.mouse.getX(), y= love.mouse.getY()}
-
-		table.insert(entities, kek)
-		clickDeb = false
-	else
-		clickDeb = true
-	end
+	
 
 	if Physics.getDistance(love.mouse.getX(), love.mouse.getY(), self.location.x, self.location.y) >= 20 then
 

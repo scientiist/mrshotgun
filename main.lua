@@ -36,6 +36,9 @@ local Monster = require("scripts/entity/Monster")
 local meta = {
 	version = "0.2.0",
 }
+clickDeb = tue
+
+player = Player:new()
 
 map = {
 	{1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0},
@@ -49,7 +52,7 @@ map = {
 
 entities = {}
 
-table.insert(entities, Player:new())
+table.insert(entities, player)
 
 function love.load()
 
@@ -59,8 +62,22 @@ end
 
 function love.update(dt)
 	for i = 1, #entities do
-		entities[i]:update(dt)
-		print(i)
+		if entities[i]:instanceOf("LivingEntity") then
+			entities[i]:update(dt)
+		end
+	end
+
+	if love.mouse.isDown(1) and clickDeb == true then
+		
+
+		local kek = Monster:new()
+
+		kek.location = {x = love.mouse.getX(), y = love.mouse.getY()}
+
+		table.insert(entities, kek)
+		clickDeb = false
+	else
+		clickDeb = true
 	end
 end
 
