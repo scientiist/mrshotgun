@@ -2,6 +2,8 @@
 -- The main inheritance for all entities --
 -------------------------------------------
 
+local Vector2 = require("scripts/util/Vector2")
+
 local obj = {}
 
 function obj:new(o)
@@ -12,19 +14,19 @@ function obj:new(o)
 end
 
 -- Create the basic table
-local BaseEntity = obj:new()
+local BaseEntity = obj:new{}
 
 	-- allows for stuff
-BaseEntity._inheritance = {}
+BaseEntity._inheritance = {"BaseEntity"}
 	-- simple location
-BaseEntity.location = {x = 0, y = 0,}
+BaseEntity.location = Vector2.new()
 
 -- create a new OOP Entity
 
 
 -- Adds entityType to the Entity's inheritance list
-function BaseEntity:addInheritance(entityType)
-	table.insert(self._inheritance, entityType)
+function BaseEntity:setInheritance(entityType)
+	self._inheritance = entityType
 end
 
 -- check if entityType is in Entity's inheritance list

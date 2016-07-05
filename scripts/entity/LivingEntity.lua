@@ -14,7 +14,7 @@ local EntityType = require("scripts/entity/EnumEntityType")
 local LivingEntity = BaseEntity:new()
 
 -- Go ahead and make him his own thing
-LivingEntity:addInheritance("LivingEntity")
+LivingEntity:setInheritance({"LivingEntity"})
 
 -- everything a Living entity needs
 LivingEntity.location.facing = 1 -- direction facing 
@@ -31,24 +31,24 @@ LivingEntity.grip = 8
 function LivingEntity:mapCollision()
 	for ya = 1, #map do
 		for xa = 1, #map[ya] do
-			local kek = Physics.isColliding({x=self.location.x-self.size-1, y=self.location.y-self.size-1, width=self.size*2+1, height=self.size*2+1}, {x=xa*64, y=ya*64, width=64, height=64})
+			local kek = Physics.isColliding({x=self.location.x-self.size/2-1, y=self.location.y-self.size/2-1, width=self.size+1, height=self.size+1}, {x=xa*64, y=ya*64, width=64, height=64})
 			if map[ya][xa] == 1 then
 
 				if kek then
 					if kek == "r" then
-						self.location.x = xa*64+64+self.size
+						self.location.x = xa*64+64+self.size/2
 					end
 
 					if kek == "l" then
-						self.location.x = xa*64-self.size
+						self.location.x = xa*64-self.size/2
 					end
 
 					if kek == "t" then
-						self.location.y = ya*64-self.size
+						self.location.y = ya*64-self.size/2
 					end
 
 					if kek == "b" then
-						self.location.y = ya*64+64+self.size
+						self.location.y = ya*64+64+self.size/2
 					end
 				end
 			end
@@ -58,8 +58,8 @@ end
 
 --
 function LivingEntity:walking(dt)
-	self.location.x = self.location.x + ((math.cos(self.location.facing) * (self.speed * self.velocity)) * dt)
-	self.location.y = self.location.y + ((math.sin(self.location.facing) * (self.speed * self.velocity)) * dt)
+	self.location.x = self.location.x + ((math.cos(self.facing) * (self.speed * self.velocity)) * dt)
+	self.location.y = self.location.y + ((math.sin(self.facing) * (self.speed * self.velocity)) * dt)
 
 	if self.velocity > self.maxVelocity then
 		self.velocity = self.maxVelocity

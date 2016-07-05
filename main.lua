@@ -65,6 +65,7 @@ function love.update(dt)
 		if entities[i]:instanceOf("LivingEntity") then
 			entities[i]:update(dt)
 		end
+
 	end
 
 	if love.mouse.isDown(1) and clickDeb == true then
