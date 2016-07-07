@@ -10,10 +10,17 @@ Maprender.tiles = {
 function Maprender:draw()
 	for y = 1, #map.tiles do
 		for x = 1, #map.tiles[y] do
-			if map.tiles[y][x] == 1 then
-				love.graphics.setColor(100, 100, 100)
-				love.graphics.rectangle("fill", x*64, y*64, 64, 64)
+			local tile = map.tiles[y][x]
+			for i = 1, #Maprender.tiles do
+				if Maprender.tiles[i].name == tile then
+
+					local image = Maprender.tiles[i].image
+					
+					love.graphics.draw(image, x*32, y*32, 0, image:getWidth()/(image:getWidth()*2), image:getHeight()/(image:getHeight()*2))
+				end
 			end
 		end
 	end
 end
+
+return Maprender

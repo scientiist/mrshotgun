@@ -7,7 +7,7 @@ local function genEmptyMap(xSize, ySize)
 	for y = 1, ySize do
 		tiles[y] = {}
 		for x = 1, xSize do
-			tiles[y][x] = ""
+			tiles[y][x] = "Grass"
 		end
 	end
 

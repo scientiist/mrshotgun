@@ -32,6 +32,8 @@ local Player = require("scripts/entity/Player")
 local Monster = require("scripts/entity/Monster")
 local Json = require("scripts/util/Json")
 local Mapload = require("scripts/map/Mapload")
+local Maprender = require("scripts/map/Maprender")
+local Menu = require("scripts/menu/MenuSystem")
 
 local meta = {
 	version = "0.2.0",
@@ -40,19 +42,42 @@ clickDeb = tue
 
 player = Player:new()
 
-
-
 map = Mapload.readMap("MapFile")
 
 table.insert(map.entities, player)
 
 function love.load()
 
-	love.window.setMode(1024, 608, {resizable = true, minwidth = 512, minheight = 304})
+	love.window.setMode(1024, 608, {fullscreen = false})
 	love.window.setTitle("Mr Shotgun by Joshua O'Leary. v"..meta.version)
 end
 
+function love.keypressed(key)
+	if key == "1" then
+		love.window.setMode(768, 456, {fullscreen = false})
+	end
+
+	if key == "2" then
+		love.window.setMode(1024, 608, {fullscreen = false})
+	end
+
+	if key == "3" then
+		love.window.setMode(1280, 760, {fullscreen = false})
+	end
+
+	if key == "4" then
+		love.window.setMode(1536, 912, {fullscreen = false})
+	end
+
+
+	if key == "escape" then
+		os.exit()
+	end
+end
+
 function love.update(dt)
+
+	--[[
 	for i = 1, #map.entities do
 		if map.entities[i]:instanceOf("LivingEntity") then
 			map.entities[i]:update(dt)
@@ -71,14 +96,21 @@ function love.update(dt)
 		clickDeb = false
 	else
 		clickDeb = true
-	end
+	end]]--
+
+	Menu:update(dt)
 end
 
 function love.draw()
+
+	Menu:draw()
 	love.graphics.push()
+	local ratio = math.min(love.graphics.getWidth()/1024, love.graphics.getHeight()/608)
 	love.graphics.scale(love.graphics.getWidth()/1024, love.graphics.getHeight()/608)
 
-	love.graphics.setColor(255,255,255)
+	Menu:drawScaledGraphics()
+
+	--[[love.graphics.setColor(255,255,255)
 	love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
 
 	for i = 1, #map.entities do
@@ -86,18 +118,12 @@ function love.draw()
 			map.entities[i]:draw()
 		end
 	end
-
-
-	for y = 1, #map do
-		for x = 1, #map[y] do
-			if map[y][x] == 1 then
-				love.graphics.setColor(100, 100, 100)
-				love.graphics.rectangle("fill", x*64, y*64, 64, 64)
-			end
-		end
-	end
+	Maprender:draw()]]
+	
+	
 
 	love.graphics.pop()
+
 end
 
 -- I'm not afraid of dying, any time will do. I don't mind at all.

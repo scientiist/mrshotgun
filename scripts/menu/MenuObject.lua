@@ -5,7 +5,7 @@ local BaseEntity = require("scripts/entity/BaseEntity")
 
 local MenuObject = BaseEntity:new()
 
-MenuObject:addInheritance("MenuObject")
+MenuObject:setInheritance({"MenuObject"})
 
 function MenuObject:draw()
 	love.graphics.setColor(0, 0, 0, 0)
