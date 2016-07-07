@@ -38,17 +38,23 @@ local Menu = require("scripts/menu/MenuSystem")
 local meta = {
 	version = "0.2.0",
 }
-clickDeb = tue
 
-player = Player:new()
+cameraX, cameraY = 0, 0
 
-map = Mapload.readMap("MapFile")
+local runMode = "Menu" -- Menu, Editor, Game
 
-table.insert(map.entities, player)
+map = {}
+
+function startGame()
+	player = Player:new()
+	runMode = "Game"
+	map = Mapload.readMap("MapFile")
+	table.insert(map.entities, player)
+end
 
 function love.load()
 
-	love.window.setMode(1024, 608, {fullscreen = false})
+	love.window.setMode(1024, 608, {vsync = false, fullscreen = false})
 	love.window.setTitle("Mr Shotgun by Joshua O'Leary. v"..meta.version)
 end
 
@@ -77,53 +83,65 @@ end
 
 function love.update(dt)
 
-	--[[
-	for i = 1, #map.entities do
-		if map.entities[i]:instanceOf("LivingEntity") then
-			map.entities[i]:update(dt)
+	if runMode == "Menu" then
+		Menu:update(dt)
+	elseif runMode == "Game" then
+
+		for i = 1, #map.entities do
+			if map.entities[i]:instanceOf("LivingEntity") then
+				map.entities[i]:update(dt)
+			end
+
 		end
 
+		if love.mouse.isDown(1) and clickDeb == true then
+			
+
+			local kek = Monster:new()
+
+			kek.location = {x = love.mouse.getX(), y = love.mouse.getY()}
+
+			table.insert(map.entities, kek)
+			clickDeb = false
+		else
+			clickDeb = true
+		end
 	end
 
-	if love.mouse.isDown(1) and clickDeb == true then
-		
-
-		local kek = Monster:new()
-
-		kek.location = {x = love.mouse.getX(), y = love.mouse.getY()}
-
-		table.insert(map.entities, kek)
-		clickDeb = false
-	else
-		clickDeb = true
-	end]]--
-
-	Menu:update(dt)
+	
 end
 
 function love.draw()
+	if runMode == "Menu" then
+		Menu:draw()
+		love.graphics.push()
+		love.graphics.scale(love.graphics.getWidth()/1024, love.graphics.getHeight()/608)
+		Menu:drawScaledGraphics()
+		love.graphics.pop()
+	elseif runMode == "Game" then
 
-	Menu:draw()
-	love.graphics.push()
-	local ratio = math.min(love.graphics.getWidth()/1024, love.graphics.getHeight()/608)
-	love.graphics.scale(love.graphics.getWidth()/1024, love.graphics.getHeight()/608)
+		love.graphics.push()
+		love.graphics.scale(love.graphics.getWidth()/1024, love.graphics.getHeight()/608)
 
-	Menu:drawScaledGraphics()
+		love.graphics.setColor(255,255,255)
+		love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
 
-	--[[love.graphics.setColor(255,255,255)
-	love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
+		
+		Maprender:draw()
 
-	for i = 1, #map.entities do
-		if map.entities[i]:instanceOf("LivingEntity") then
-			map.entities[i]:draw()
+		for i = 1, #map.entities do
+			if map.entities[i]:instanceOf("LivingEntity") then
+				map.entities[i]:draw()
+			end
 		end
+
+
+		love.graphics.pop()
 	end
-	Maprender:draw()]]
-	
-	
 
-	love.graphics.pop()
-
+	love.graphics.setColor(0, 0, 0)
+	love.graphics.setFont(love.graphics.newFont(14))
+	love.graphics.print("fps: "..love.timer.getFPS(), 10, 10)
 end
 
 -- I'm not afraid of dying, any time will do. I don't mind at all.

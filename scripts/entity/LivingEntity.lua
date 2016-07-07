@@ -31,27 +31,27 @@ LivingEntity.grip = 8
 function LivingEntity:mapCollision()
 	for ya = 1, #map.tiles do
 		for xa = 1, #map.tiles[ya] do
-			local kek = Physics.isColliding({x=self.location.x-self.size/2-1, y=self.location.y-self.size/2-1, width=self.size+1, height=self.size+1}, {x=xa*64, y=ya*64, width=64, height=64})
+			local kek = Physics.isColliding({x=self.location.x-self.size/2-1, y=self.location.y-self.size/2-1, width=self.size+1, height=self.size+1}, {x=xa*32, y=ya*32, width=32, height=32})
 			
 			-- grab the ID of the tile at this location
 			-- check if it is a collidable block
-			if not map.tiles[ya][xa] == "" then
+			if map.tiles[ya][xa] == "Wall" then
 
 				if kek then
 					if kek == "r" then
-						self.location.x = xa*64+64+self.size/2
+						self.location.x = xa*32+32+self.size/2
 					end
 
 					if kek == "l" then
-						self.location.x = xa*64-self.size/2
+						self.location.x = xa*32-self.size/2
 					end
 
 					if kek == "t" then
-						self.location.y = ya*64-self.size/2
+						self.location.y = ya*32-self.size/2
 					end
 
 					if kek == "b" then
-						self.location.y = ya*64+64+self.size/2
+						self.location.y = ya*32+32+self.size/2
 					end
 				end
 			end

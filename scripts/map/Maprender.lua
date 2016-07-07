@@ -16,7 +16,7 @@ function Maprender:draw()
 
 					local image = Maprender.tiles[i].image
 					
-					love.graphics.draw(image, x*32, y*32, 0, image:getWidth()/(image:getWidth()*2), image:getHeight()/(image:getHeight()*2))
+					love.graphics.draw(image, x*32, y*32, 0, 2, 2)
 				end
 			end
 		end

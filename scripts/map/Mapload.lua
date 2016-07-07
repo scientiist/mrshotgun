@@ -21,7 +21,7 @@ function Mapload.readMap(mapFileName)
 	local map = {entities={},tiles={},metadata={}}
 
 	if mapFile == nil then
-		map = {metadata = {name = ""}, entities = {}, tiles = genEmptyMap(128,128)}
+		map = {metadata = {name = ""}, entities = {}, tiles = genEmptyMap(32,32)}
 	else
 		loadMap = json.decode(mapFile:read())
 
