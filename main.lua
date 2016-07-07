@@ -30,8 +30,8 @@ local EntityType = require("scripts/entity/EnumEntityType")
 local Physics = require("scripts/util/PhysicsUtil")
 local Player = require("scripts/entity/Player")
 local Monster = require("scripts/entity/Monster")
-
-
+local Json = require("scripts/util/Json")
+local Mapload = require("scripts/map/Mapload")
 
 local meta = {
 	version = "0.2.0",
@@ -40,19 +40,11 @@ clickDeb = tue
 
 player = Player:new()
 
-map = {
-	{1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0},
-	{1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0},
-	{0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0},
-	{0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0},
-	{1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0},
-	{1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0},
-	{1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0},
-}
 
-entities = {}
 
-table.insert(entities, player)
+map = Mapload.readMap("MapFile")
+
+table.insert(map.entities, player)
 
 function love.load()
 
@@ -61,9 +53,9 @@ function love.load()
 end
 
 function love.update(dt)
-	for i = 1, #entities do
-		if entities[i]:instanceOf("LivingEntity") then
-			entities[i]:update(dt)
+	for i = 1, #map.entities do
+		if map.entities[i]:instanceOf("LivingEntity") then
+			map.entities[i]:update(dt)
 		end
 
 	end
@@ -75,7 +67,7 @@ function love.update(dt)
 
 		kek.location = {x = love.mouse.getX(), y = love.mouse.getY()}
 
-		table.insert(entities, kek)
+		table.insert(map.entities, kek)
 		clickDeb = false
 	else
 		clickDeb = true
@@ -89,9 +81,9 @@ function love.draw()
 	love.graphics.setColor(255,255,255)
 	love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
 
-	for i = 1, #entities do
-		if entities[i]:instanceOf("LivingEntity") then
-			entities[i]:draw()
+	for i = 1, #map.entities do
+		if map.entities[i]:instanceOf("LivingEntity") then
+			map.entities[i]:draw()
 		end
 	end
 

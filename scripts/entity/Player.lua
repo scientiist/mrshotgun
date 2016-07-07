@@ -6,7 +6,7 @@ local LivingEntity = require("scripts/entity/LivingEntity")
 local Monster = require("scripts/entity/Monster")
 local Player = LivingEntity:new()
 
-local image = love.graphics.newImage("assets/textures/playerBody.png")
+local image = love.graphics.newImage("assets/textures/entities/player.png")
 
 Player:setInheritance({"PlayerEntity", "LivingEntity"})
 
@@ -30,9 +30,9 @@ function Player:update(dt)
 	end
 
 	
-	for i = 1, #entities do
-		if entities[i]:instanceOf("MonsterEntity") then
-			local en = entities[i]
+	for i = 1, #map.entities do
+		if map.entities[i]:instanceOf("MonsterEntity") then
+			local en = map.entities[i]
 
 			local playerRect = {x=self.location.x-self.size/2-1, y=self.location.y-self.size/2-1, width=self.size+1, height=self.size+1}
 			local otherEntityRect = {x=en.location.x-en.size/2-1, y=en.location.y-en.size/2-1, width=en.size+1, height=en.size+1}

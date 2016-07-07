@@ -1,6 +1,6 @@
 local LivingEntity = require("scripts/entity/LivingEntity")
 
-local image = love.graphics.newImage("assets/textures/enemy.png")
+local image = love.graphics.newImage("assets/textures/entities/enemy.png")
 
 local Monster = LivingEntity:new()
 

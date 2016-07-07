@@ -26,9 +26,9 @@ local isEncodable
 -- @return String containing the JSON encoding in internal Lua string format (i.e. not unicode)
 function json.encode (v)
         -- Handle nil values
-        if v==nil then
+    if v==nil then
         return "null"
-        end
+    end
     
     local vtype = type(v)
 

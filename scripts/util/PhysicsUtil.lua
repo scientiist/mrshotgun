@@ -1,5 +1,12 @@
 local PhysicsUtil = {}
 
+function PhysicsUtil.checkAABB(x1,y1,w1,h1, x2,y2,w2,h2)
+  return x1 < x2+w2 and
+         x2 < x1+w1 and
+         y1 < y2+h2 and
+         y2 < y1+h1
+end
+
 function PhysicsUtil.isColliding(rect1, rect2)
    local dir=nil
    if (rect1.x < rect2.x+rect2.width and rect2.x < rect1.x+rect1.width and rect1.y < rect2.y+rect2.height and rect2.y < rect1.y+rect1.height) then

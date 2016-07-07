@@ -29,10 +29,13 @@ LivingEntity.grip = 8
 
 -- function all LivingEntities share, prevents clipping in blocks and shit
 function LivingEntity:mapCollision()
-	for ya = 1, #map do
-		for xa = 1, #map[ya] do
+	for ya = 1, #map.tiles do
+		for xa = 1, #map.tiles[ya] do
 			local kek = Physics.isColliding({x=self.location.x-self.size/2-1, y=self.location.y-self.size/2-1, width=self.size+1, height=self.size+1}, {x=xa*64, y=ya*64, width=64, height=64})
-			if map[ya][xa] == 1 then
+			
+			-- grab the ID of the tile at this location
+			-- check if it is a collidable block
+			if map.tiles[ya][xa] == "" then
 
 				if kek then
 					if kek == "r" then
