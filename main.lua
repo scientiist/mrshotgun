@@ -26,25 +26,44 @@
 ]]--
 
 
-local EntityType = require("scripts/entity/EnumEntityType")
+----------------------------------------------------
+-- Load requirements for the game to run and such --
+----------------------------------------------------
+
+-- Utilities --
 local Physics = require("scripts/util/PhysicsUtil")
-local Player = require("scripts/entity/Player")
-local Monster = require("scripts/entity/Monster")
 local Json = require("scripts/util/Json")
 local Mapload = require("scripts/map/Mapload")
 local Maprender = require("scripts/map/Maprender")
+-- Entities and Objects
+local EntityType = require("scripts/entity/EnumEntityType")
+local Player = require("scripts/entity/Player")
+local Monster = require("scripts/entity/Monster")
+-- Menu system
 local Menu = require("scripts/menu/MenuSystem")
 
+
+-- Metadata for Mr Shotgun
 local meta = {
-	version = "0.2.0",
+	version = "0.2.0", -- game version
 }
 
+-- perspective camera X and Y
 cameraX, cameraY = 0, 0
 
+-- Game editor information
+editor = {
+	chosenItem = 0,
+	grid = false,
+}
+
+-- the runmode of the game
 local runMode = "Menu" -- Menu, Editor, Game
 
+-- The actual map thingymaboop
 map = {}
 
+-- Initializes the game
 function startGame()
 	player = Player:new()
 	runMode = "Game"
@@ -52,6 +71,13 @@ function startGame()
 	table.insert(map.entities, player)
 end
 
+-- Initializes the map editor
+function startEditor()
+	runMode = "Editor"
+	map = Mapload.readMap("MapFile")
+end
+
+-- happens on game creation
 function love.load()
 
 	love.window.setMode(1024, 608, {vsync = false, fullscreen = false})
@@ -59,6 +85,7 @@ function love.load()
 end
 
 function love.keypressed(key)
+	-- change the window size
 	if key == "1" then
 		love.window.setMode(768, 456, {fullscreen = false})
 	end
@@ -75,9 +102,16 @@ function love.keypressed(key)
 		love.window.setMode(1536, 912, {fullscreen = false})
 	end
 
-
+	-- end game
 	if key == "escape" then
 		os.exit()
+	end
+
+	-- switch if the editor grid is shown
+	if runMode == "Editor" then
+		if key == "g" then
+			editor.grid = not editor.grid
+		end
 	end
 end
 
@@ -85,6 +119,26 @@ function love.update(dt)
 
 	if runMode == "Menu" then
 		Menu:update(dt)
+	elseif runMode == "Editor" then
+		if love.keyboard.isDown("w") then
+			cameraY = cameraY - 5 - dt
+		end
+
+		if love.keyboard.isDown("s") then
+			cameraY = cameraY + 5 + dt
+		end
+
+		if love.keyboard.isDown("a") then
+			cameraX = cameraX - 5 - dt
+		end
+
+		if love.keyboard.isDown("d") then
+			cameraX = cameraX + 5 + dt
+		end
+
+		if cameraX < 0 then cameraX = 0 end
+		if cameraY < 0 then cameraY = 0 end
+
 	elseif runMode == "Game" then
 
 		for i = 1, #map.entities do
@@ -113,17 +167,42 @@ end
 
 function love.draw()
 	if runMode == "Menu" then
+
 		Menu:draw()
 		love.graphics.push()
 		love.graphics.scale(love.graphics.getWidth()/1024, love.graphics.getHeight()/608)
 		Menu:drawScaledGraphics()
+		love.graphics.pop()
+
+	elseif runMode == "Editor" then
+		love.graphics.push()
+		love.graphics.scale(love.graphics.getWidth()/1024, love.graphics.getHeight()/608)
+
+		love.graphics.setColor(105,186,185)
+		love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
+
+		
+		Maprender:draw()
+
+		-- if we want to draw the grid
+		if editor.grid == true then
+			-- color
+			love.graphics.setColor(200,200,200, 100)
+			for x = 1, 256 do
+				love.graphics.line(x*32-cameraX, 0-cameraY, x*32-cameraX, 256*32)
+			end
+			for y = 1, 256 do
+				love.graphics.line(0-cameraX, y*32-cameraY, (128*32)-cameraX, y*32-cameraY)
+			end
+		end
+
 		love.graphics.pop()
 	elseif runMode == "Game" then
 
 		love.graphics.push()
 		love.graphics.scale(love.graphics.getWidth()/1024, love.graphics.getHeight()/608)
 
-		love.graphics.setColor(255,255,255)
+		love.graphics.setColor(135,206,235)
 		love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
 
 		

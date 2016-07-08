@@ -4,6 +4,8 @@ local Maprender = {}
 
 Maprender.tiles = {
 	Tile.newTile("Grass", "grass.png"),
+	Tile.newTile("WallUp", "wall_up.png"),
+	Tile.newTile("WallSide", "wall_side.png"),
 }
 
 
@@ -16,7 +18,7 @@ function Maprender:draw()
 
 					local image = Maprender.tiles[i].image
 					
-					love.graphics.draw(image, x*32, y*32, 0, 2, 2)
+					love.graphics.draw(image, x*32-cameraX, y*32-cameraY, 0, 2, 2)
 				end
 			end
 		end

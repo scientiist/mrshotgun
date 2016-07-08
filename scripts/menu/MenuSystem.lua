@@ -16,7 +16,7 @@ MenuSystem.menus = {
 	main = {
 		objects = {
 			ButtonObject:new({clicked = function() startGame() end, text = "Play", y = 256}),
-			ButtonObject:new({text = "Map Editor", y = 256+64}),
+			ButtonObject:new({clicked = function() startEditor() end, text = "Map Editor", y = 256+64}),
 			ButtonObject:new({text = "Options", y = 384}),
 			ButtonObject:new({clicked = function() os.exit() end,text = "Quit Game", y = 384+64}),
 		},
