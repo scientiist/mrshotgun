@@ -10,6 +10,7 @@ Maprender.tiles = {
 
 
 function Maprender:draw()
+	love.graphics.setColor(255,255,255)
 	for y = 1, #map.tiles do
 		for x = 1, #map.tiles[y] do
 			local tile = map.tiles[y][x]
@@ -30,7 +31,7 @@ function Maprender:draw()
 	for i = 1, #Maprender.tiles do
 		if Maprender.tiles[i].name == editor.selectedBlock then
 			local image = Maprender.tiles[i].image
-			love.graphics.draw(image, mouseX*32-cameraX, mouseY*32, 0, image:getWidth()/(image:getWidth()*2), image:getHeight()/(image:getHeight()*2))
+			love.graphics.draw(image, mouseX*32-cameraX, mouseY*32)
 		end
 	end
 end
