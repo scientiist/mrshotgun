@@ -50,10 +50,12 @@ local meta = {
 
 -- perspective camera X and Y
 cameraX, cameraY = 0, 0
+mouseX, mouseY = 0, 0
 
 -- Game editor information
 editor = {
-	chosenItem = 0,
+	selectedBlock = "Grass",
+	selectedInt = 1,
 	grid = false,
 }
 
@@ -61,7 +63,7 @@ editor = {
 local runMode = "Menu" -- Menu, Editor, Game
 
 -- The actual map thingymaboop
-map = {}
+map = {tiles={{}}}
 
 -- Initializes the game
 function startGame()
@@ -82,6 +84,21 @@ function love.load()
 
 	love.window.setMode(1024, 608, {vsync = false, fullscreen = false})
 	love.window.setTitle("Mr Shotgun by Joshua O'Leary. v"..meta.version)
+end
+
+function love.wheelmoved(x, y)
+
+	-- let's scroll the selected block
+	editor.selectedInt = editor.selectedInt - y
+
+	if editor.selectedInt > #Maprender.tiles then
+		editor.selectedInt = 1
+	elseif editor.selectedInt < 1 then
+		editor.selectedInt = #Maprender.tiles
+	end
+
+	editor.selectedBlock = Maprender.tiles[editor.selectedInt].name
+	print(selectedBlockNum)
 end
 
 function love.keypressed(key)
@@ -138,6 +155,17 @@ function love.update(dt)
 
 		if cameraX < 0 then cameraX = 0 end
 		if cameraY < 0 then cameraY = 0 end
+
+		mouseX = math.floor((love.mouse.getX()+cameraX)/32)
+		mouseY = math.floor((love.mouse.getY()+cameraY)/32)
+
+		if mouseY >= 1 and mouseX >= 1 then 
+			if love.mouse.isDown(1) then
+				map.tiles[mouseY][mouseX] = editor.selectedBlock
+			elseif love.mouse.isDown(2) then
+				map.tiles[mouseY][mouseX] = ""
+			end
+		end
 
 	elseif runMode == "Game" then
 

@@ -18,9 +18,19 @@ function Maprender:draw()
 
 					local image = Maprender.tiles[i].image
 					
-					love.graphics.draw(image, x*32-cameraX, y*32-cameraY, 0, 2, 2)
+					love.graphics.draw(image, x*32-cameraX, y*32-cameraY)
 				end
 			end
+		end
+	end
+
+
+	-- render image of placing
+	love.graphics.setColor(255,255,255,100)
+	for i = 1, #Maprender.tiles do
+		if Maprender.tiles[i].name == editor.selectedBlock then
+			local image = Maprender.tiles[i].image
+			love.graphics.draw(image, mouseX*32-cameraX, mouseY*32, 0, image:getWidth()/(image:getWidth()*2), image:getHeight()/(image:getHeight()*2))
 		end
 	end
 end
