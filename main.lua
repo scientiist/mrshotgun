@@ -129,6 +129,10 @@ function love.keypressed(key)
 		if key == "g" then
 			editor.grid = not editor.grid
 		end
+		if key == "p" then
+			Mapload.writeMap("MapFile", map)
+			print("File Saved!")
+		end
 	end
 end
 

@@ -25,13 +25,14 @@ function Maprender:draw()
 		end
 	end
 
-
-	-- render image of placing
-	love.graphics.setColor(255,255,255,100)
-	for i = 1, #Maprender.tiles do
-		if Maprender.tiles[i].name == editor.selectedBlock then
-			local image = Maprender.tiles[i].image
-			love.graphics.draw(image, mouseX*32-cameraX, mouseY*32)
+	if runMode == "Editor" then
+		-- render image of placing
+		love.graphics.setColor(255,255,255,100)
+		for i = 1, #Maprender.tiles do
+			if Maprender.tiles[i].name == editor.selectedBlock then
+				local image = Maprender.tiles[i].image
+				love.graphics.draw(image, mouseX*32-cameraX, mouseY*32)
+			end
 		end
 	end
 end
