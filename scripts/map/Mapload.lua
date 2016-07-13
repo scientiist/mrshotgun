@@ -40,7 +40,10 @@ function Mapload.readMap(mapFileName)
 	return map
 end
 
+
 function Mapload.writeMap(mapFileName, map)
+
+	-- create copy to move over all data
 	local saveMap = {}
 	saveMap.metadata = map.metadata
 	saveMap.tiles = map.tiles
