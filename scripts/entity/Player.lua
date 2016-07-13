@@ -11,7 +11,7 @@ local image = love.graphics.newImage("assets/textures/entities/player.png")
 Player:setInheritance({"PlayerEntity", "LivingEntity"})
 
 Player.score = 0
-Player.location = Vector2.new(100, 10)
+Player.location = Vector2.new(200, 200)
 Player.facing = 3
 Player.size = 32
 

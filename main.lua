@@ -60,7 +60,7 @@ editor = {
 }
 
 -- the runmode of the game
-local runMode = "Menu" -- Menu, Editor, Game
+runMode = "Menu" -- Menu, Editor, Game
 
 -- The actual map thingymaboop
 map = {tiles={{}}}

@@ -35,7 +35,7 @@ function LivingEntity:mapCollision()
 			
 			-- grab the ID of the tile at this location
 			-- check if it is a collidable block
-			if map.tiles[ya][xa] == "Wall" then
+			if map.tiles[ya][xa] ~= "Grass" then
 
 				if kek then
 					if kek == "r" then

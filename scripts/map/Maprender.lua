@@ -6,6 +6,19 @@ Maprender.tiles = {
 	Tile.newTile("Grass", "grass.png"),
 	Tile.newTile("WallUp", "wall_up.png"),
 	Tile.newTile("WallSide", "wall_side.png"),
+	Tile.newTile("WallCornerTL", "wall_corner_topleft.png"),
+	Tile.newTile("WallCornerBL", "wall_corner_bottomleft.png"),
+	Tile.newTile("WallCornerTR", "wall_corner_topright.png"),
+	Tile.newTile("WallCornerBR", "wall_corner_bottomright.png"),
+}
+
+Maprender.collidables = {
+	"WallUp",
+	"WallSide",
+	"WallCornerTL",
+	"WallCornerBL",
+	"WallCornerTR",
+	"WallCornerBR",
 }
 
 
