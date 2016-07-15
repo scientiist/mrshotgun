@@ -48,9 +48,13 @@ local meta = {
 	version = "0.2.0", -- game version
 }
 
+settings = {
+	debug = true
+}
 -- perspective camera X and Y
 cameraX, cameraY = 0, 0
 mouseX, mouseY = 0, 0
+
 
 -- Game editor information
 editor = {
@@ -98,7 +102,6 @@ function love.wheelmoved(x, y)
 	end
 
 	editor.selectedBlock = Maprender.tiles[editor.selectedInt].name
-	print(selectedBlockNum)
 end
 
 function love.keypressed(key)
@@ -119,9 +122,19 @@ function love.keypressed(key)
 		love.window.setMode(1536, 912, {fullscreen = false})
 	end
 
+	if key == "f1" then
+		settings.debug = not settings.debug
+	end
+
 	-- end game
-	if key == "escape" then
+	if key == "f12" then
 		os.exit()
+	end
+
+	if runMode == "Game" then
+		if key == "escape" then
+			runMode = "Menu"
+		end
 	end
 
 	-- switch if the editor grid is shown
@@ -183,17 +196,14 @@ function love.update(dt)
 
 		end
 
-		if love.mouse.isDown(1) and clickDeb == true then
-			
+		-- spawn new enemies
+		local rollChance = math.random(1,100)
+		local difficulty = 1
 
-			local kek = Monster:new()
-
-			kek.location = {x = love.mouse.getX(), y = love.mouse.getY()}
-
-			table.insert(map.entities, kek)
-			clickDeb = false
-		else
-			clickDeb = true
+		local randY = math.random(1, #map.tiles)
+		local randX = math.random(1, #map.tiles[randY])
+		if difficulty >= rollChance and map.tiles[randY][randX] == "Grass" then
+			table.insert(map.entities, Monster:new({location = {x = randX*32, y = randY*32}}))
 		end
 	end
 
@@ -213,7 +223,7 @@ function love.draw()
 		love.graphics.push()
 		love.graphics.scale(love.graphics.getWidth()/1024, love.graphics.getHeight()/608)
 
-		love.graphics.setColor(105,186,185)
+		love.graphics.setColor(70,130,180)
 		love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
 
 		
@@ -237,7 +247,7 @@ function love.draw()
 		love.graphics.push()
 		love.graphics.scale(love.graphics.getWidth()/1024, love.graphics.getHeight()/608)
 
-		love.graphics.setColor(135,206,235)
+		love.graphics.setColor(70,130,180)
 		love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
 
 		
@@ -251,11 +261,15 @@ function love.draw()
 
 
 		love.graphics.pop()
+		if settings.debug == true then
+			love.graphics.setColor(255, 255, 255)
+			love.graphics.setFont(love.graphics.newFont(14))
+			love.graphics.print("fps: "..love.timer.getFPS(), 10, 10)
+			love.graphics.print("gc: "..math.floor(collectgarbage("count")).." (kb)", 10, 25)
+		end
 	end
 
-	love.graphics.setColor(0, 0, 0)
-	love.graphics.setFont(love.graphics.newFont(14))
-	love.graphics.print("fps: "..love.timer.getFPS(), 10, 10)
+
 end
 
 -- I'm not afraid of dying, any time will do. I don't mind at all.

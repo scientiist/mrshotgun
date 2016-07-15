@@ -14,9 +14,16 @@ VERSION - MM/DD/YY:
 
 ----------------------------
 
+0.2.1 Alpha - July 13, 2016:
+    + Added entities with physics
+    + Added map with tiles
+    + Added tile loading and saving
+    + Added map editor
+    + Added menu
+
 0.2.0 Alpha - June 28, 2016:
 
-    / I'M BACK BITCHES
+    / I'M BACK
     * Redid everything lol
     + Using a nice OOP Entity system for stuff.
 

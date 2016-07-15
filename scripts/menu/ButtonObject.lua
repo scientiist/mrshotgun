@@ -2,22 +2,26 @@
 -- Button object for Mr Shotgun menu system --
 ----------------------------------------------
 
+-- requirements
 local BaseEntity = require("scripts/entity/BaseEntity")
 local PhysicsUtil = require("scripts/util/PhysicsUtil")
 
+-- create new object
 local ButtonObject = BaseEntity:new()
 
-ButtonObject:setInheritance({"MenuObject", "ButtonObject"})
+-- add it's own variables
+ButtonObject:setInheritance({"ButtonObject"})
 
-ButtonObject.x = love.graphics.getWidth()/2
+ButtonObject.x = love.graphics.getWidth()/2 -- location
 ButtonObject.y = 256
-ButtonObject.text = "Button"
-ButtonObject.tooltip = nil
+ButtonObject.text = "Button" -- text
+ButtonObject.tooltip = nil -- tooltip text
 ButtonObject.width = 192
 ButtonObject.height = 48
-ButtonObject.clickedDeb = false
-ButtonObject.mouseOver = false
+ButtonObject.clickedDeb = false -- if it's clicked
+ButtonObject.mouseOver = false -- if the mouse is over it
 
+-- update the button object
 function ButtonObject:update(dt)
 	if PhysicsUtil.checkAABB(love.mouse.getX(), love.mouse.getY(), 1, 1, self.x, self.y, self.width, self.height) == true then
 		self.mouseOver = true
@@ -35,8 +39,7 @@ function ButtonObject:update(dt)
 	end
 end
 
-
-function ButtonObject:clicked(mouseButton) -- note: 1 = left, 2 = right
+function ButtonObject:clicked() -- note: 1 = left, 2 = right
 	print(self.text.." button was clicked!")
 end
 

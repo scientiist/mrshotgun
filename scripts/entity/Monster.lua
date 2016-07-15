@@ -8,7 +8,7 @@ Monster:setInheritance({"MonsterEntity", "LivingEntity"})
 
 Monster.facing = 0
 Monster.destination = {x=0,y=0}
-Monster.walkspeed = 0.2
+Monster.speed = 50
 Monster.size = 32
 
 function Monster:update(dt)
@@ -23,12 +23,13 @@ function Monster:update(dt)
 		print(self._inheritance[i])
 	end]]
 
-	print(self.score)
 end
 
 function Monster:draw()
-love.graphics.setColor(255, 0, 0, 128)
-	love.graphics.rectangle("fill", self.location.x-self.size/2, self.location.y-self.size/2, self.size, self.size)
+	if settings.debug then
+		love.graphics.setColor(255, 0, 0, 128)
+		love.graphics.rectangle("fill", self.location.x-self.size/2, self.location.y-self.size/2, self.size, self.size)
+	end
 	love.graphics.setColor(255,255,255)
 	love.graphics.draw(image, self.location.x, self.location.y, self.facing, 1, 1, image:getWidth()/2, image:getHeight()/2)
 end
