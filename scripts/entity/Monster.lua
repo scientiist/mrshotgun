@@ -23,6 +23,9 @@ function Monster:update(dt)
 		print(self._inheritance[i])
 	end]]
 
+	if self.health < 1 then
+		self:remove()
+	end
 end
 
 function Monster:draw()

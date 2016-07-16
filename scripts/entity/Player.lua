@@ -1,9 +1,7 @@
 local Physics = require("scripts/util/PhysicsUtil")
 local Vector2 = require("scripts/util/Vector2")
--- entityType enum
-local EntityType = require("scripts/entity/EnumEntityType")
 local LivingEntity = require("scripts/entity/LivingEntity")
-local Monster = require("scripts/entity/Monster")
+local Bullet = require("scripts/entity/Bullet")
 local Player = LivingEntity:new()
 
 local image = love.graphics.newImage("assets/textures/entities/player.png")
@@ -14,9 +12,25 @@ Player.score = 0
 Player.location = Vector2.new(200, 200)
 Player.facing = 3
 Player.size = 32
+Player.shootDebounce = true
 
 function Player:update(dt)
+
+	for i = 1, #self._inheritance do
+		print(self._inheritance[i])
+	end
+
+	-- player clicked and can shoot
+	if love.mouse.isDown(1) and self.shootDebounce == true then
+		self.shootDebounce = false
+		for i = 1, 3 do
+
+			table.insert(map.entities, Bullet:new({location = {x=self.location.x,y=self.location.y}, facing = self.facing}))
+		end
+	end
 	
+	if not love.mouse.isDown(1) then self.shootDebounce = true end
+
 
 	if Physics.getDistance(love.mouse.getX(), love.mouse.getY(), self.location.x, self.location.y) >= 20 then
 

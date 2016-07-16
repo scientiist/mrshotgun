@@ -4,11 +4,10 @@
 
 -- grab our requirements
 local Physics = require("scripts/util/PhysicsUtil")
-
+local Utils = require("scripts/util/Utils")
 
 -- parent base entity
 local BaseEntity = require("scripts/entity/BaseEntity")
-local EntityType = require("scripts/entity/EnumEntityType")
 
 -- create our new guy
 local LivingEntity = BaseEntity:new()
@@ -17,7 +16,7 @@ local LivingEntity = BaseEntity:new()
 LivingEntity:setInheritance({"LivingEntity"})
 
 -- everything a Living entity needs
-LivingEntity.location.facing = 1 -- direction facing 
+LivingEntity.facing = 1 -- direction facing 
 LivingEntity.size = 16 -- radius size of the entity's BoundingBox
 LivingEntity.health = 100
 LivingEntity.maxHealth = 100
@@ -26,6 +25,19 @@ LivingEntity.walkspeed = 0.4
 LivingEntity.speed = 200
 LivingEntity.maxVelocity = 1.0
 LivingEntity.grip = 8
+
+function LivingEntity:remove()
+	table.remove(map.entities, Utils.indexOf(map.entities, self))
+	collectgarbage()
+end
+
+function LivingEntity:damage(amount)
+	self.health = self.health - amount
+
+	if self.health < 0 then
+		self.health = 0
+	end
+end
 
 -- function all LivingEntities share, prevents clipping in blocks and shit
 function LivingEntity:mapCollision()

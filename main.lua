@@ -36,7 +36,6 @@ local Json = require("scripts/util/Json")
 local Mapload = require("scripts/map/Mapload")
 local Maprender = require("scripts/map/Maprender")
 -- Entities and Objects
-local EntityType = require("scripts/entity/EnumEntityType")
 local Player = require("scripts/entity/Player")
 local Monster = require("scripts/entity/Monster")
 -- Menu system
@@ -190,10 +189,9 @@ function love.update(dt)
 	elseif runMode == "Game" then
 
 		for i = 1, #map.entities do
-			if map.entities[i]:instanceOf("LivingEntity") then
+			if map.entities[i] ~= nil and map.entities[i]:instanceOf("LivingEntity") then
 				map.entities[i]:update(dt)
 			end
-
 		end
 
 		-- spawn new enemies
