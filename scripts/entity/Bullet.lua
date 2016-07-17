@@ -6,7 +6,8 @@
 local LivingEntity = require("scripts/entity/LivingEntity")
 local Physics = require("scripts/util/PhysicsUtil")
 local Vector2 = require("scripts/util/Vector2")
-
+local Maprender = require("scripts/map/Maprender")
+local Utils = require("scripts/util/Utils")
 local BaseEntity = require("scripts/entity/BaseEntity")
 
 -- make the bullet it's own thing
@@ -27,7 +28,7 @@ function Bullet:mapCollision()
 			
 			-- grab the ID of the tile at this location
 			-- check if it is a collidable block
-			if map.tiles[ya][xa] ~= "Grass" then
+			if Utils.tableContains(Maprender.collidables, map.tiles[ya][xa]) then
 
 				if kek then
 					if kek == "r" then

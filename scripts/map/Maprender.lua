@@ -1,9 +1,10 @@
 local Tile = require("scripts/util/Tile")
 
 local Maprender = {}
-
+local image = love.graphics.newImage("assets/textures/tiles/water.png")
 Maprender.tiles = {
 	Tile.newTile("Grass", "grass.png"),
+	Tile.newTile("Floor", "floor.png"),
 	Tile.newTile("WallUp", "wall_up.png"),
 	Tile.newTile("WallSide", "wall_side.png"),
 	Tile.newTile("WallCornerTL", "wall_corner_topleft.png"),
@@ -22,8 +23,16 @@ Maprender.collidables = {
 }
 
 
+
 function Maprender:draw()
 	love.graphics.setColor(255,255,255)
+
+	for y = 1, 16 do
+		for x = 1, 16 do
+			love.graphics.draw(image, x*128-150+flux-cameraX*0.1, y*128-150-cameraY*0.1)
+		end
+	end
+
 	for y = 1, #map.tiles do
 		for x = 1, #map.tiles[y] do
 			local tile = map.tiles[y][x]
@@ -44,7 +53,7 @@ function Maprender:draw()
 		for i = 1, #Maprender.tiles do
 			if Maprender.tiles[i].name == editor.selectedBlock then
 				local image = Maprender.tiles[i].image
-				love.graphics.draw(image, mouseX*32-cameraX, mouseY*32)
+				love.graphics.draw(image, mouseX*32-cameraX, mouseY*32-cameraY)
 			end
 		end
 	end

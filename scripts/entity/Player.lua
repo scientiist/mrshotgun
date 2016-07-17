@@ -16,6 +16,9 @@ Player.shootDebounce = true
 
 function Player:update(dt)
 
+	cameraX = self.location.x - (love.graphics.getWidth()/2)
+	cameraY = self.location.y - (love.graphics.getHeight()/2)
+
 	for i = 1, #self._inheritance do
 		print(self._inheritance[i])
 	end
@@ -74,7 +77,7 @@ function Player:update(dt)
 		end
 	end
 
-	self.facing = math.atan2(love.mouse.getY() - self.location.y, love.mouse.getX() - self.location.x)
+	self.facing = math.atan2(love.mouse.getY() - love.graphics.getHeight()/2, love.mouse.getX() - love.graphics.getWidth()/2)
 	
 
 	self:walking(dt)	
@@ -84,10 +87,10 @@ end
 function Player:draw()
 	if settings.debug then
 		love.graphics.setColor(255, 0, 0, 128)
-		love.graphics.rectangle("fill", self.location.x-self.size/2, self.location.y-self.size/2, self.size, self.size)
+		love.graphics.rectangle("fill", love.graphics.getWidth()/2-self.size/2, love.graphics.getHeight()/2-self.size/2, self.size, self.size)
 	end
 	love.graphics.setColor(255,255,255)
-	love.graphics.draw(image, self.location.x, self.location.y, self.facing, 1, 1, image:getWidth()/2, image:getHeight()/2)
+	love.graphics.draw(image, love.graphics.getWidth()/2, love.graphics.getHeight()/2, self.facing, 1, 1, image:getWidth()/2, image:getHeight()/2)
 
 end
 

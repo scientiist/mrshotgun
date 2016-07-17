@@ -54,7 +54,8 @@ settings = {
 cameraX, cameraY = 0, 0
 mouseX, mouseY = 0, 0
 
-
+fluxDir = 1
+flux = 0
 -- Game editor information
 editor = {
 	selectedBlock = "Grass",
@@ -187,6 +188,21 @@ function love.update(dt)
 		end
 
 	elseif runMode == "Game" then
+
+		if fluxDir == 1 then
+			flux = flux + (dt * 5)
+		end
+
+		if fluxDir == 0 then
+			flux = flux - (dt * 5)
+		end
+
+		if flux >= 10 then
+			fluxDir = 0
+		end
+		if flux <= -10 then
+			fluxDir = 1
+		end
 
 		for i = 1, #map.entities do
 			if map.entities[i] ~= nil and map.entities[i]:instanceOf("LivingEntity") then

@@ -5,7 +5,7 @@
 -- grab our requirements
 local Physics = require("scripts/util/PhysicsUtil")
 local Utils = require("scripts/util/Utils")
-
+local Maprender = require("scripts/map/Maprender")
 -- parent base entity
 local BaseEntity = require("scripts/entity/BaseEntity")
 
@@ -47,7 +47,7 @@ function LivingEntity:mapCollision()
 			
 			-- grab the ID of the tile at this location
 			-- check if it is a collidable block
-			if map.tiles[ya][xa] ~= "Grass" then
+			if Utils.tableContains(Maprender.collidables, map.tiles[ya][xa]) then
 
 				if kek then
 					if kek == "r" then
