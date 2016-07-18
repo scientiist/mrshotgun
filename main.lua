@@ -47,12 +47,14 @@ local meta = {
 	version = "0.2.0", -- game version
 }
 
+-- settings and such
 settings = {
 	debug = true
 }
 -- perspective camera X and Y
 cameraX, cameraY = 0, 0
 mouseX, mouseY = 0, 0
+scaleX, scaleY = 1, 1
 
 fluxDir = 1
 flux = 0
@@ -80,7 +82,7 @@ end
 -- Initializes the map editor
 function startEditor()
 	runMode = "Editor"
-	map = Mapload.readMap("MapFile")
+	map = Mapload.readMap("MapFile", 512)
 end
 
 -- happens on game creation
@@ -131,7 +133,7 @@ function love.keypressed(key)
 		os.exit()
 	end
 
-	if runMode == "Game" then
+	if runMode == "Game" or runMode == "Editor" then
 		if key == "escape" then
 			runMode = "Menu"
 		end
@@ -153,6 +155,13 @@ function love.keypressed(key)
 end
 
 function love.update(dt)
+
+	-- update globals
+	scaleX = love.graphics.getWidth()/1024
+	scaleY = love.graphics.getHeight()/608
+
+	mouseX = love.mouse.getX()/scaleX
+	mouseY = love.mouse.getY()/scaleY
 
 	if runMode == "Menu" then
 		Menu:update(dt)
@@ -176,14 +185,14 @@ function love.update(dt)
 		if cameraX < 0 then cameraX = 0 end
 		if cameraY < 0 then cameraY = 0 end
 
-		mouseX = math.floor((love.mouse.getX()+cameraX)/32)
-		mouseY = math.floor((love.mouse.getY()+cameraY)/32)
+		local lmouseX = math.floor((mouseX+cameraX)/32)
+		local lmouseY = math.floor((mouseY+cameraY)/32)
 
-		if mouseY >= 1 and mouseX >= 1 then 
+		if lmouseY >= 1 and lmouseX >= 1 then 
 			if love.mouse.isDown(1) then
-				map.tiles[mouseY][mouseX] = editor.selectedBlock
+				map.tiles[lmouseY][lmouseX] = editor.selectedBlock
 			elseif love.mouse.isDown(2) then
-				map.tiles[mouseY][mouseX] = ""
+				map.tiles[lmouseY][lmouseX] = ""
 			end
 		end
 
