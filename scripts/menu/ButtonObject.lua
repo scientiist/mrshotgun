@@ -23,7 +23,7 @@ ButtonObject.mouseOver = false -- if the mouse is over it
 
 -- update the button object
 function ButtonObject:update(dt)
-	if PhysicsUtil.checkAABB(love.mouse.getX(), love.mouse.getY(), 1, 1, self.x, self.y, self.width, self.height) == true then
+	if PhysicsUtil.checkAABB(mouseX, mouseY, 1, 1, self.x, self.y, self.width, self.height) == true then
 		self.mouseOver = true
 	else
 		self.mouseOver = false

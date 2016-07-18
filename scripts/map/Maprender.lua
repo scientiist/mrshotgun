@@ -29,7 +29,7 @@ function Maprender:draw()
 
 	for y = 1, 16 do
 		for x = 1, 16 do
-			love.graphics.draw(image, x*128-150+flux-cameraX*0.1, y*128-150-cameraY*0.1)
+			love.graphics.draw(image, x*128-192+flux-cameraX*0.1, y*128-192-cameraY*0.1)
 		end
 	end
 
@@ -53,7 +53,7 @@ function Maprender:draw()
 		for i = 1, #Maprender.tiles do
 			if Maprender.tiles[i].name == editor.selectedBlock then
 				local image = Maprender.tiles[i].image
-				love.graphics.draw(image, mouseX*32-cameraX, mouseY*32-cameraY)
+				love.graphics.draw(image, (mouseX/scaleX)*32-cameraX, (mouseY/scaleY)*32-cameraY)
 			end
 		end
 	end

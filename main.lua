@@ -288,7 +288,7 @@ function love.draw()
 			love.graphics.setColor(255, 255, 255)
 			love.graphics.setFont(love.graphics.newFont(14))
 			love.graphics.print("fps: "..love.timer.getFPS(), 10, 10)
-			love.graphics.print("gc: "..math.floor(collectgarbage("count")).." (kb)", 10, 25)
+			love.graphics.print("gc: "..math.floor(collectgarbage("count"))/1000.." (mb)", 10, 25)
 		end
 	end
 
