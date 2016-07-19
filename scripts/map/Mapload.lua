@@ -18,31 +18,25 @@ local function genEmptyMap(xSize, ySize)
 	return tiles
 end
 
-function Mapload.readMap(mapFileName, size)
 
+function Mapload.readMap(mapFileName, size)
 	local mapFile = io.open(mapFileName..".map", 'r')
 	local loadMap
 	local map = {entities={},tiles={},metadata={}}
 
 	if mapFile == nil then
-		map = {metadata = {name = ""}, entities = {}, tiles = genEmptyMap(32,32)}
+		map = {metadata = {name = "", size = size}, entities = {}, tiles = genEmptyMap(size, size)}
 	else
 		loadMap = json.decode(mapFile:read())
 
 		map.metadata = loadMap.metadata
 
-		for y = 1, 512 do
-			if loadMap[y] == nil then loadMap[y] = {} end
-			for x = 1, 512 do
-				if loadMap[y][x] == nil then loadMap[y][x] = "" end
-			end
-		end
 		map.tiles = loadMap.tiles
 
 		for i = 1, #loadMap.entities do
-			--local entity = convertSaveToEntity(loadMap.entities[i])
-			print(entity)
-			table.insert(map.entities, entity)
+			local entity = convertSaveToEntity(loadMap.entities[i])
+			--print(entity)
+			--table.insert(map.entities, entity)
 		end
 		mapFile:close()
 	end

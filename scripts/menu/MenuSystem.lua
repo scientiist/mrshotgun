@@ -16,7 +16,7 @@ local ButtonObject = require("scripts/menu/ButtonObject")
 MenuSystem.fonts = {
 	zombifiedHeader = love.graphics.newFont("assets/fonts/zombified.ttf", 80),
 	button = love.graphics.newFont("assets/fonts/pixel.ttf", 35),
-	text = love.graphics.newFont("assets/fonts/pixel.ttf", 22),
+	text = love.graphics.newFont("assets/fonts/pixel.ttf", 24),
 }
 
 -- local function to set the menu via string

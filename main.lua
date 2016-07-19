@@ -45,7 +45,7 @@ math.randomseed(os.clock()) math.random()
 
 -- Metadata for Mr Shotgun
 local meta = {
-	version = "0.2.0", -- game version
+	version = "0.2.2", -- game version
 }
 
 -- settings and such
@@ -76,14 +76,14 @@ map = {tiles={{}}}
 function startGame()
 	player = Player:new()
 	runMode = "Game"
-	map = Mapload.readMap("MapFile")
+	map = Mapload.readMap("MapFile", 2048)
 	table.insert(map.entities, player)
 end
 
 -- Initializes the map editor
 function startEditor()
 	runMode = "Editor"
-	map = Mapload.readMap("MapFile", 512)
+	map = Mapload.readMap("MapFile", 2048)
 end
 
 -- happens on game creation
@@ -91,6 +91,7 @@ function love.load()
 
 	love.window.setMode(1024, 608, {vsync = false, fullscreen = false})
 	love.window.setTitle("Mr Shotgun by Joshua O'Leary. v"..meta.version)
+	love.filesystem.setIdentity("mr_shotgun")
 end
 
 function love.wheelmoved(x, y)
@@ -166,6 +167,7 @@ function love.update(dt)
 
 	if runMode == "Menu" then
 		Menu:update(dt)
+
 	elseif runMode == "Editor" then
 		if love.keyboard.isDown("w") then
 			cameraY = cameraY - 5 - dt
