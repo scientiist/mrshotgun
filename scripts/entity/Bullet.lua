@@ -3,13 +3,14 @@
 ------------------------------------------------------
 
 -- require physics and other stuff
-local LivingEntity = require("scripts/entity/LivingEntity")
 local Physics = require("scripts/util/PhysicsUtil")
 local Vector2 = require("scripts/util/Vector2")
 local Maprender = require("scripts/map/Maprender")
 local Utils = require("scripts/util/Utils")
-local BaseEntity = require("scripts/entity/BaseEntity")
+local Particle = require("scripts/entity/Particle")
+local LivingEntity = require("scripts/entity/LivingEntity")
 
+math.randomseed(os.clock())
 -- make the bullet it's own thing
 local Bullet = LivingEntity:new({})
 
@@ -29,6 +30,8 @@ function Bullet:mapCollision()
 			if Utils.tableContains(Maprender.collidables, map.tiles[ya][xa]) then
 
 				if Physics.checkAABB(self.location.x, self.location.y, 1, 1, xa*32, ya*32, 32, 32) then
+					local sendFacing = self.facing + math.random(-12, 12)
+					table.insert(map.entities, Particle:new({location = self.location, facing = sendFacing}))
 					self:remove()
 				end
 			end

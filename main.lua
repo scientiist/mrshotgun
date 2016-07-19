@@ -41,6 +41,7 @@ local Monster = require("scripts/entity/Monster")
 -- Menu system
 local Menu = require("scripts/menu/MenuSystem")
 
+math.randomseed(os.clock()) math.random()
 
 -- Metadata for Mr Shotgun
 local meta = {
