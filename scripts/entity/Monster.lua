@@ -10,6 +10,8 @@ Monster.facing = 0
 Monster.destination = {x=0,y=0}
 Monster.speed = 100
 Monster.size = 32
+Monster.health = 20
+Monster.maxHealth = 20
 Monster.walkspeed = 0.1
 
 function Monster:update(dt)
@@ -35,13 +37,22 @@ function Monster:draw()
 
 	-- draw healthbar
 
-	-- draw red
-	love.graphics.setColor(255, 0, 0)
+	-- draw outline
+	love.graphics.setColor(0, 0, 0)
 	love.graphics.rectangle("fill", self.location.x - 20 - cameraX, self.location.y - 30 - cameraY, 40, 10)
 
-	-- draw green
-	love.graphics.setColor(0, 255, 0)
-	--love.graphics.set
+	-- draw overbar
+
+	local healthRatio = (self.health/self.maxHealth)
+	local color = {200, 0, 0}
+
+	if healthRatio >= (1/5) then color = {255, 92, 0} end
+	if healthRatio >= (2/5) then color = {255, 155, 0} end
+	if healthRatio >= (3/5) then color = {255,255,0} end
+	if healthRatio >= (4/5) then color = {205, 255, 0} end
+	if healthRatio >= (5/5) then color = {0, 255, 0} end
+	love.graphics.setColor(color)
+	love.graphics.rectangle("fill", self.location.x - 18 - cameraX, self.location.y - 28 - cameraY, healthRatio*36, 6)
 end
 
 return Monster

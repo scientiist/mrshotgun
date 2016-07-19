@@ -18,14 +18,14 @@ function Player:update(dt)
 
 	cameraX = self.location.x - (love.graphics.getWidth()/2)
 	cameraY = self.location.y - (love.graphics.getHeight()/2)
-	print(love.graphics.getWidth())
 
 	-- player clicked and can shoot
 	if love.mouse.isDown(1) and self.shootDebounce == true then
 		self.shootDebounce = false
 		for i = 1, 3 do
 
-			table.insert(map.entities, Bullet:new({location = {x=self.location.x,y=self.location.y}, facing = self.facing}))
+			local sendFacing = self.facing + math.random(-25, 25)/100
+			table.insert(map.entities, Bullet:new({location = {x=self.location.x,y=self.location.y}, facing = sendFacing}))
 		end
 	end
 	

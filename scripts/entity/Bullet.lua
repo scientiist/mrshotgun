@@ -17,7 +17,7 @@ Bullet:setInheritance({"LivingEntity", "BulletEntity"})
 
 
 Bullet.speed = 500
-Bullet.damage = 20
+Bullet.damage = 2
 
 
 -- bullet hitting walls and shit
@@ -46,7 +46,7 @@ function Bullet:update(dt)
 			local en = map.entities[i]
 
 			if Physics.checkAABB(self.location.x, self.location.y, 1, 1, en.location.x-en.size/2, en.location.y-en.size/2, en.size, en.size) then
-				en:damage(20)
+				en:damage(self.damage)
 				en.velocity = -en.velocity
 				self:remove()
 			end
