@@ -7,3 +7,5 @@ A top-down arcade shooter by _j0sh!
 - [ ] Arcade mode
 - [ ] Inventory system
 - [ ] Decent enemy AI
+
+### Something here soon
