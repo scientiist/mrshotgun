@@ -19,7 +19,7 @@ local BaseEntity = obj:new{}
 	-- allows for stuff
 BaseEntity._inheritance = {"BaseEntity"}
 	-- simple location
-BaseEntity.location = Vector2.new()
+BaseEntity.location = Vector2.new(0, 0)
 
 -- create a new OOP Entity
 

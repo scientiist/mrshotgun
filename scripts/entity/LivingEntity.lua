@@ -26,6 +26,10 @@ LivingEntity.speed = 200
 LivingEntity.maxVelocity = 1.0
 LivingEntity.grip = 8
 
+function LivingEntity:returnSaveData()
+	return {types = self._inheritance,facing = self.facing, location = self.location, health = self.health, maxHealth = self.maxHealth}
+end
+
 function LivingEntity:remove()
 	table.remove(map.entities, Utils.indexOf(map.entities, self))
 	collectgarbage()

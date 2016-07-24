@@ -1,3 +1,7 @@
+--------------------------------------------------
+-- Map loading and saving system for Mr Shotgun --
+--------------------------------------------------
+
 local json = require("scripts/util/Json")
 
 local Mapload = {}
@@ -14,24 +18,25 @@ local function genEmptyMap(xSize, ySize)
 	return tiles
 end
 
-function Mapload.readMap(mapFileName)
-	
+
+function Mapload.readMap(mapFileName, size)
 	local mapFile = io.open(mapFileName..".map", 'r')
 	local loadMap
 	local map = {entities={},tiles={},metadata={}}
 
 	if mapFile == nil then
-		map = {metadata = {name = ""}, entities = {}, tiles = genEmptyMap(32,32)}
+		map = {metadata = {name = "", size = size}, entities = {}, tiles = genEmptyMap(size, size)}
 	else
 		loadMap = json.decode(mapFile:read())
 
 		map.metadata = loadMap.metadata
+
 		map.tiles = loadMap.tiles
 
 		for i = 1, #loadMap.entities do
 			local entity = convertSaveToEntity(loadMap.entities[i])
-			print(entity)
-			table.insert(map.entities, entity)
+			--print(entity)
+			--table.insert(map.entities, entity)
 		end
 		mapFile:close()
 	end

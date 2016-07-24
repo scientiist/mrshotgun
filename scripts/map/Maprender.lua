@@ -1,4 +1,5 @@
 local Tile = require("scripts/util/Tile")
+local Physics = require("scripts/util/PhysicsUtil")
 
 local Maprender = {}
 local image = love.graphics.newImage("assets/textures/tiles/water.png")
@@ -29,19 +30,22 @@ function Maprender:draw()
 
 	for y = 1, 16 do
 		for x = 1, 16 do
-			love.graphics.draw(image, x*128-150+flux-cameraX*0.1, y*128-150-cameraY*0.1)
+			love.graphics.draw(image, x*128-192+flux-cameraX*0.1, y*128-192-cameraY*0.1)
 		end
 	end
 
 	for y = 1, #map.tiles do
 		for x = 1, #map.tiles[y] do
 			local tile = map.tiles[y][x]
-			for i = 1, #Maprender.tiles do
-				if Maprender.tiles[i].name == tile then
-
-					local image = Maprender.tiles[i].image
-					
-					love.graphics.draw(image, x*32-cameraX, y*32-cameraY)
+			if tile ~= "" then
+				for i = 1, #Maprender.tiles do
+					if Maprender.tiles[i].name == tile then
+						if Physics.checkAABB(cameraX, cameraY, love.graphics.getWidth(), love.graphics.getWidth(), x*32, y*32, 32, 32) then
+							local image = Maprender.tiles[i].image
+						
+							love.graphics.draw(image, x*32-cameraX, y*32-cameraY)
+						end
+					end
 				end
 			end
 		end
@@ -50,10 +54,14 @@ function Maprender:draw()
 	if runMode == "Editor" then
 		-- render image of placing
 		love.graphics.setColor(255,255,255,100)
+
+		local lmouseX = math.floor((mouseX+cameraX)/32)
+		local lmouseY = math.floor((mouseY+cameraY)/32)
+
 		for i = 1, #Maprender.tiles do
 			if Maprender.tiles[i].name == editor.selectedBlock then
 				local image = Maprender.tiles[i].image
-				love.graphics.draw(image, mouseX*32-cameraX, mouseY*32-cameraY)
+				love.graphics.draw(image, (lmouseX/scaleX)*32-cameraX, (lmouseY/scaleY)*32-cameraY)
 			end
 		end
 	end

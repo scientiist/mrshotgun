@@ -41,18 +41,21 @@ local Monster = require("scripts/entity/Monster")
 -- Menu system
 local Menu = require("scripts/menu/MenuSystem")
 
+math.randomseed(os.clock()) math.random()
 
 -- Metadata for Mr Shotgun
 local meta = {
-	version = "0.2.0", -- game version
+	version = "0.2.2", -- game version
 }
 
+-- settings and such
 settings = {
 	debug = true
 }
 -- perspective camera X and Y
 cameraX, cameraY = 0, 0
 mouseX, mouseY = 0, 0
+scaleX, scaleY = 1, 1
 
 fluxDir = 1
 flux = 0
@@ -73,14 +76,14 @@ map = {tiles={{}}}
 function startGame()
 	player = Player:new()
 	runMode = "Game"
-	map = Mapload.readMap("MapFile")
+	map = Mapload.readMap("MapFile", 2048)
 	table.insert(map.entities, player)
 end
 
 -- Initializes the map editor
 function startEditor()
 	runMode = "Editor"
-	map = Mapload.readMap("MapFile")
+	map = Mapload.readMap("MapFile", 2048)
 end
 
 -- happens on game creation
@@ -88,6 +91,7 @@ function love.load()
 
 	love.window.setMode(1024, 608, {vsync = false, fullscreen = false})
 	love.window.setTitle("Mr Shotgun by Joshua O'Leary. v"..meta.version)
+	love.filesystem.setIdentity("mr_shotgun")
 end
 
 function love.wheelmoved(x, y)
@@ -131,7 +135,7 @@ function love.keypressed(key)
 		os.exit()
 	end
 
-	if runMode == "Game" then
+	if runMode == "Game" or runMode == "Editor" then
 		if key == "escape" then
 			runMode = "Menu"
 		end
@@ -154,8 +158,16 @@ end
 
 function love.update(dt)
 
+	-- update globals
+	scaleX = love.graphics.getWidth()/1024
+	scaleY = love.graphics.getHeight()/608
+
+	mouseX = love.mouse.getX()/scaleX
+	mouseY = love.mouse.getY()/scaleY
+
 	if runMode == "Menu" then
 		Menu:update(dt)
+
 	elseif runMode == "Editor" then
 		if love.keyboard.isDown("w") then
 			cameraY = cameraY - 5 - dt
@@ -176,14 +188,14 @@ function love.update(dt)
 		if cameraX < 0 then cameraX = 0 end
 		if cameraY < 0 then cameraY = 0 end
 
-		mouseX = math.floor((love.mouse.getX()+cameraX)/32)
-		mouseY = math.floor((love.mouse.getY()+cameraY)/32)
+		local lmouseX = math.floor((mouseX+cameraX)/32)
+		local lmouseY = math.floor((mouseY+cameraY)/32)
 
-		if mouseY >= 1 and mouseX >= 1 then 
+		if lmouseY >= 1 and lmouseX >= 1 then 
 			if love.mouse.isDown(1) then
-				map.tiles[mouseY][mouseX] = editor.selectedBlock
+				map.tiles[lmouseY][lmouseX] = editor.selectedBlock
 			elseif love.mouse.isDown(2) then
-				map.tiles[mouseY][mouseX] = ""
+				map.tiles[lmouseY][lmouseX] = ""
 			end
 		end
 
@@ -273,14 +285,21 @@ function love.draw()
 			end
 		end
 
+		-- draw user interface
 
-		love.graphics.pop()
+		-- health bar
+
+		-- debug menu
 		if settings.debug == true then
 			love.graphics.setColor(255, 255, 255)
 			love.graphics.setFont(love.graphics.newFont(14))
 			love.graphics.print("fps: "..love.timer.getFPS(), 10, 10)
-			love.graphics.print("gc: "..math.floor(collectgarbage("count")).." (kb)", 10, 25)
+			love.graphics.print("gc: "..math.floor(collectgarbage("count"))/1000 .." (mb)", 10, 25)
 		end
+
+
+		love.graphics.pop()
+		
 	end
 
 
